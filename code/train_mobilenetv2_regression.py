@@ -12,9 +12,7 @@ from torchvision import transforms
 import torchvision
 import torch.backends.cudnn as cudnn
 import torch.nn.functional as F
-
-import datasets, hopenet
-import torch.utils.model_zoo as model_zoo
+import datasets
 
 def parse_args():
     """Parse input arguments."""
@@ -84,9 +82,7 @@ if __name__ == '__main__':
         os.makedirs('output/snapshots')
 
     # ResNet50
-    model = hopenet.ResNet(torchvision.models.resnet.Bottleneck, [3, 4, 6, 3], 3)
-    load_filtered_state_dict(model, model_zoo.load_url('https://download.pytorch.org/models/resnet50-19c8e357.pth'))
-
+    model = torchvision.models.mobilenet_v2(num_classes=3, pretrained=True)
     print('Loading data.')
 
     transformations = transforms.Compose([transforms.Scale(240),
